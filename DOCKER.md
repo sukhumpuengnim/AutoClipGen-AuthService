@@ -73,6 +73,35 @@ curl http://your-vps-ip:9998/api/health
 
 ---
 
+## 🗄️ Auto Database Initialization
+
+**Database จะถูกสร้างอัตโนมัติ** เมื่อ container start:
+
+```bash
+# เมื่อ start container จะเห็น logs:
+🗄️  Initializing authentication database...
+✅ Database initialized successfully!
+📋 Tables created: passcodes, sessions, validation_logs
+```
+
+**คุณสมบัติ:**
+- ✅ **Auto-create:** Database สร้างอัตโนมัติเมื่อ start ครั้งแรก
+- ✅ **Safe restart:** Restart container ไม่ทำลายข้อมูลเดิม (ใช้ `IF NOT EXISTS`)
+- ✅ **Volume persistence:** ข้อมูลถูกเก็บใน `./database/` บน host
+- ✅ **No manual steps:** ไม่ต้องรัน `node init-db.js` ด้วยมือ
+
+**การทำงาน:**
+```yaml
+# ใน docker-compose.yml มี command:
+command: sh -c "node init-db.js && node server.js"
+```
+
+ทุกครั้งที่ container start จะ:
+1. รัน `node init-db.js` (สร้าง tables ถ้ายังไม่มี)
+2. รัน `node server.js` (start server)
+
+---
+
 ## ⚠️ สำคัญสำหรับ VPS Deployment
 
 ### 1. ตั้งค่า ALLOWED_ORIGINS

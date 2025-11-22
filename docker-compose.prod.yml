@@ -21,6 +21,9 @@ services:
       - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-*}
       - DB_PATH=/app/database/auth.db
 
+    # Auto-initialize database on startup if not exists (safe - won't overwrite existing data)
+    command: sh -c "node init-db.js && node server.js"
+
     volumes:
       # Persist database data - CRITICAL for production
       - ./database:/app/database

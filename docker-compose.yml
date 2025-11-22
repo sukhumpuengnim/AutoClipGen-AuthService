@@ -24,10 +24,12 @@ services:
       - VIRTUAL_HOST=auth-service.goozorder.com
       - LETSENCRYPT_HOST=auth-service.goozorder.com
       - LETSENCRYPT_EMAIL=goozorder@gmail.com
-    
+
     expose:
       - 9998
 
+    # Auto-initialize database on startup if not exists (safe - won't overwrite existing data)
+    command: sh -c "node init-db.js && node server.js"
 
     volumes:
       # Persist database data - CRITICAL for production

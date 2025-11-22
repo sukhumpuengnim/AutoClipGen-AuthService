@@ -186,10 +186,19 @@ docker compose -f docker-compose.prod.yml logs -f auth-service
 **ผลลัพธ์ที่ต้องเห็น:**
 
 ```
+🗄️  Initializing authentication database...
+✅ Database initialized successfully!
+📋 Tables created: passcodes, sessions, validation_logs
+📍 Database location: /app/database/auth.db
+═══════════════════════════════════════════════
+🔐 Authentication Service
+═══════════════════════════════════════════════
 ✅ Server running on 0.0.0.0:9998
 📍 Database: /app/database/auth.db
 🔒 CORS Origins: http://123.45.67.89:9999
 ```
+
+**📝 หมายเหตุ:** Database จะถูกสร้างอัตโนมัติเมื่อ container start ครั้งแรก และจะไม่ถูกสร้างใหม่ทับข้อมูลเดิมเมื่อ restart
 
 กด `Ctrl+C` เพื่อออกจาก logs
 
